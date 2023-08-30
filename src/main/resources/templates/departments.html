@@ -1,0 +1,61 @@
+<html layout:decorate="/template.html">
+<head>
+	<title>Departments</title>
+
+</head>
+
+<body>
+	<!-- <p> Khong co trong gia dien </p> -->
+
+	<div layout:fragment="content">
+		<h1>List Department</h1>
+		<a th:href="@{/department/new}">New</a>
+		<form th:action="@{/department/search}" method="get" th:object="${searchDTO}">
+			<input th:field="*{keyword}" placeholder="Tim ten..">
+			<p th:errors="*{keyword}"></p>
+
+			<input th:field="*{currentPage}" placeholder="Trang hien tai..">
+			<input th:field="*{size}" placeholder="Sl ban ghi / trang..">
+			<input name="sortedField" th:value="${searchDTO?.sortedField}" placeholder="Sap xep theo thuoc tinh">
+
+			<button type="submit">Search</button>
+		</form>
+		<div>
+			<a th:href="@{'/department/search?currentPage=0&size=5'}">Page1</a>
+			<a th:href="@{'/department/search?currentPage=1&size=5'}">Page2</a>
+		</div>
+		
+		<p> Tong so trang:
+			<span th:text="${totalPage}"></span>
+		</p>
+		<p> Tong ban ghi:
+			<span th:text="${totalElements}"></span>
+		</p>
+
+		<table border="1">
+			<!-- Dong tieu de bang-->
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Created At</th>
+				<th>Actions</th>
+			</tr>
+			<!-- Dong noi dung bang Expression-->
+
+			<tr th:each="d : ${departmentList}">
+				<td th:text="${d.id}"></td>
+				<td th:text="${d.name}"></td>
+				<td th:text="${d.createdAt}"></td>
+				<!--  se goi ham getName() -->
+				<td>
+					<a th:href="@{'/department/delete?id=' + ${d.id}}">Delete</a>
+					<a th:href="@{'/department/edit?id=' + ${d.id}}">Edit</a>
+				</td>
+
+			</tr>
+		</table>
+
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<html layout:decorate="/template.html">
+<head>
+	<title>Users</title>
+</head>
+<body>
+	<!-- <p> Khong co trong gia dien </p> -->
+	<div layout:fragment="content">
+		<h1>List User</h1>
+		<a th:href="@{/user/new}">New</a>
+		<form th:action="@{/user/search}" method="get" th:object="${searchDTO}">
+			<input th:field="*{keyword}" placeholder="Tim ten..">
+			<p th:errors="*{keyword}"></p>
+			<input th:field="*{currentPage}" placeholder="Trang hien tai..">
+			<input th:field="*{size}" placeholder="Sl ban ghi / trang..">
+			<input name="sortedField" th:value="${searchDTO?.sortedField}" placeholder="Sap xep theo thuoc tinh">
+			<button type="submit">Search</button>
+		</form>
+		<p> Tong so trang:
+			<span th:text="${totalPage}"></span>
+		</p>
+		<p> Tong ban ghi:
+			<span th:text="${totalElements}"></span>
+		</p>
+		<table border="1">
+			<!-- Dong tieu de bang-->
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Age</th>
+				<th>username</th>
+				<th>HomeAddress</th>
+				<th>Avatar</th>
+				<th>Department</th>
+				<th>Actions</th>
+			</tr>
+			<!-- Dong noi dung bang Expression-->
+
+			<tr th:each="u : ${userList}">
+				<td th:text="${u.id}"></td>
+				<td th:text="${u.name}"></td>
+				<td th:text="${u.age}"></td>
+				<td th:text="${u.username}"></td>
+				<td th:text="${u.homeAddress}"></td>
+				<td>
+					<img src="@{'/user/download?filename= ' + ${u.avatarURL}}">
+				</td>
+					<td th:text="${u.department?.name}"></td>
+				<td>
+					<a th:href="@{'/user/delete?id=' + ${u.id}}">Delete</a>
+					<a th:href="@{'/user/edit?id=' + ${u.id}}">Edit</a>
+				</td>
+
+			</tr>
+		</table>
+	</div>
+</body>
+
+</html>

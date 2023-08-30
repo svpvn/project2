@@ -1,0 +1,61 @@
+<html layout:decorate="/template.html">
+<head>
+	<title>Ticket</title>
+</head>
+<body>
+	<!-- <p> Khong co trong gia dien </p> -->
+	<div layout:fragment="content">
+		<h1>List Ticket</h1>
+		<a th:href="@{/ticket/new}">New</a>
+		<form th:action="@{/ticket/search}" method="get" th:object="${searchDTO}">
+			<input th:field="*{keyword}" placeholder="Tim ten..">
+			<p th:errors="*{keyword}"></p>
+			<input th:field="*{currentPage}" placeholder="Trang hien tai..">
+			<input th:field="*{size}" placeholder="Sl ban ghi / trang..">
+			<input name="sortedField" th:value="${searchDTO?.sortedField}" placeholder="Sap xep theo thuoc tinh">
+			<button type="submit">Search</button>
+		</form>
+			<p> Tong so trang:
+			<span th:text="${totalPage}"></span>
+		</p>
+		<p> Tong ban ghi:
+			<span th:text="${totalElements}"></span>
+		</p>
+		<table border="1">
+			<!-- Dong tieu de bang-->
+			<tr>
+				<th>ID</th>
+				<th>Client Name</th>
+				<th>Client Phone</th>
+				<th>Content</th>
+				<th>Status</th>
+				<th>Created At</th>
+				<th>Process Date</th>
+				<th>Department</th>
+				<th>Actions</th>
+			</tr>
+			<!-- Dong noi dung bang Expression-->
+
+			<tr th:each="t : ${ticketList}">
+				<td th:text="${t.id}"></td>
+				<td th:text="${t.clientName}"></td>
+				<td th:text="${t.clientPhone}"></td>
+				<td th:text="${t.content}"></td>
+				<td><input type="checkbox" th:checked="${t.status}"/></td>
+				<td th:text="${#dates.format(t.createdAt,'dd/MM/yyyy')}"></td>
+				<td th:text="${#dates.format(t.processDate,'dd/MM/yyyy')}"></td>
+				<td th:text="${t.department?.name}"></td>
+				<!--  se goi ham getName() -->
+				<td>
+					
+					<a th:href="@{'/ticket/delete?id=' + ${t.id}}">Delete</a>
+					<a th:href="@{'/ticket/edit?id=' + ${t.id}}">Edit</a>
+				</td>
+
+			</tr>
+		</table>
+
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+<html>
+<head>
+	<title>Login.html</title>
+</head>
+<body>
+	<h1>Login</h1>
+	<!--@{url} dung th: contextpath tu dong thay doi duong dan -->
+	<form th:action="@{/login}" method="post">
+		<label>UserName: </label>
+		<input type="text" name="username">	
+		
+		<label>Password: </label>
+		<input type="password" name="password">	
+		
+		<button type="submit">Login</button>
+	</form>
+</body>
+</html>

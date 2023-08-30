@@ -1,0 +1,38 @@
+<form th:action="@{/ticket/edit}" method="post"  th:object="${ticket}">
+	
+	<div>
+		<label>ID: </label>
+		<input readonly name="id" th:value="${ticket.id}"/>
+	</div>
+	<div>
+		<label>Client Name: </label>
+		<input type="text" name="clientName" th:value="${ticket.clientName}"/>
+	</div>
+	<div>
+		<label>Client Phone: </label>
+		<input type="text" name="clientPhone" th:value="${ticket.clientPhone}"/>
+	</div>
+	<div>
+		<label>Content: </label>
+		<input type="text" name="content" th:value="${ticket.content}"/>
+	</div>
+	<div>
+		<label>Status: </label>
+		<input type="checkbox" name="status" th:checked="${ticket.status}"/>
+	</div>
+	<div>
+		<label>ProcessDate: </label>
+		<input type="text" name="processDate" th:value="${ticket.processDate}"/>
+	</div>
+	<div>
+		<label>Department: </label>
+		<select name="department.id">
+			<option th:selected="${d.id == ticket.department?.id}" 
+			th:each="d : ${departmentList}"
+			th:value="${d.id}" th:text="${d.name}"/>
+		</select>
+	</div>
+	<div>
+		<button type="submit">Save</button>
+	</div>
+</form>
